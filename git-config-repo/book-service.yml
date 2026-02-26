@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: book-service
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/book_db?serverTimezone=UTC
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    servlet:
+      path: /api
+
+server:
+  port: 8002
