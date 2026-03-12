@@ -64,7 +64,7 @@ resilience4j:
           - java.util.concurrent.TimeoutException
 
   timelimiter:
-    instances:
-      book-service:
-        timeout-duration: 5s
+    configs:
+      default:
+        timeout-duration: 10s
         cancel-running-future: true

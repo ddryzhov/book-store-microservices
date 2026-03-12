@@ -18,7 +18,7 @@ spring:
   mvc:
     servlet:
       path: /api
-      
+
   cloud:
     openfeign:
       circuitbreaker:
@@ -62,7 +62,7 @@ resilience4j:
           - java.net.ConnectException
           - java.util.concurrent.TimeoutException
   timelimiter:
-    instances:
-      cart-service:
-        timeout-duration: 5s
+    configs:
+      default:
+        timeout-duration: 10s
         cancel-running-future: true
