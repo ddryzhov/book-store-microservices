@@ -19,6 +19,19 @@ spring:
     servlet:
       path: /api
 
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+      client:
+        config:
+          default:
+            connect-timeout: 2000
+            read-timeout: 5000
+          cart-service:
+            connect-timeout: 2000
+            read-timeout: 5000
+
 server:
   port: 8004
 
@@ -28,11 +41,31 @@ jwt:
 internal:
   token: ${INTERNAL_TOKEN}
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-  endpoint:
-    health:
-      show-details: never
+resilience4j:
+  circuitbreaker:
+    instances:
+      cart-service:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        register-health-indicator: true
+        slow-call-rate-threshold: 80
+        slow-call-duration-threshold: 4s
+
+  retry:
+    instances:
+      cart-service:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - feign.RetryableException
+          - java.net.ConnectException
+          - java.util.concurrent.TimeoutException
+
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 10s
+        cancel-running-future: true
