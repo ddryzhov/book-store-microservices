@@ -11,7 +11,7 @@ spring:
     enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         delay_entity_loader_creations: true

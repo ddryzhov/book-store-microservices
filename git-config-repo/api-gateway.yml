@@ -3,6 +3,10 @@ server:
 
 spring:
   cloud:
+    loadbalancer:
+      cache:
+        ttl: 5s
+        capacity: 256
     gateway:
       discovery:
         locator:
